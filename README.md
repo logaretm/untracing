@@ -5,6 +5,9 @@
 Untracing provides a unified naming registry and standard to ensure that library authors and observability tools speak
 the same language when using [Diagnostics Channels](https://nodejs.org/api/diagnostics_channel.html) and [Tracing Channels](https://nodejs.org/api/diagnostics_channel.html#class-tracingchannel).
 
+> [!NOTE]
+> This document is a work in progress and not finalized yet.
+
 ---
  
 ## Diagnostics Channels
