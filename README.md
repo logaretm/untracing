@@ -60,3 +60,10 @@ const standaloneChannel = diagnostics_channel.channel('tracing:{namespace}.{oper
 const tracingChannel = diagnostics_channel.tracingChannel('{namespace}.{operation}');
 
 ```
+
+## References
+
+Some libraries and frameworks are already using Diagnostics Channels or Tracing Channels. Here are a few examples:
+
+- [Fastify Diagnostics Channel Hooks](https://fastify.dev/docs/latest/Reference/Hooks/#diagnostics-channel-hooks)
+- Tracing Channels in [srvx](https://srvx.h3.dev/): [Example](https://github.com/h3js/srvx/tree/main/examples/tracing), [PR](https://github.com/h3js/srvx/pull/141)
