@@ -42,28 +42,40 @@ all `Channel` instances (standalone or as part of `TracingChannel`) should follo
 
 ```
 tracing:{namespace}.{operation}:{eventType}
+tracing:{namespace}:{operation}:{eventType}
 ```
+
+Both `.` (dot) and `:` (colon) are accepted as the delimiter between namespace and operation. Node.js itself uses both conventions:
+
+- **Dot:** Node.js core built-in channels (e.g., `http.client.request`, `net.server.socket`, `module.require`)
+- **Colon:** undici (e.g., `undici:request:create`, `undici:client:connected`)
+
+Libraries should pick one delimiter and use it consistently. The dot style reads as a hierarchy (`h3.request`), while the colon style reads as a scoped label (`mysql2:query`). Both are valid.
 
 **Pattern Breakdown**
 
-- **Namespace:** The package or module name (e.g., `unstorage`, `h3`, `undici`).
+- **Namespace:** The package or module name (e.g., `unstorage`, `h3`, `undici`, `mysql2`).
 - **Operation:** The entity being acted upon (e.g., `request`, `file`, `query`). Use full nouns, not abbreviations.
 - **Event Type:** The lifecycle hook (e.g., `start`, `end`).
 
-Example:
+Examples:
 
 ```ts
 import diagnostics_channel from 'node:diagnostics_channel';
 
-const standaloneChannel = diagnostics_channel.channel('tracing:{namespace}.{operation}:{eventType}');
-// or
+// Dot delimiter
 const tracingChannel = diagnostics_channel.tracingChannel('{namespace}.{operation}');
 
+// Colon delimiter
+const tracingChannel = diagnostics_channel.tracingChannel('{namespace}:{operation}');
 ```
 
 ## References
 
 Some libraries and frameworks are already using Diagnostics Channels or Tracing Channels. Here are a few examples:
 
+- [Node.js built-in Diagnostics Channels](https://nodejs.org/api/diagnostics_channel.html#built-in-channels) (dot delimiter: `http.client.request`, `net.server.socket`)
+- [undici Diagnostics Channels](https://github.com/nodejs/undici/blob/main/docs/docs/api/DiagnosticsChannel.md) (colon delimiter: `undici:request:create`)
 - [Fastify Diagnostics Channel Hooks](https://fastify.dev/docs/latest/Reference/Hooks/#diagnostics-channel-hooks)
 - Tracing Channels in [srvx](https://srvx.h3.dev/): [Example](https://github.com/h3js/srvx/tree/main/examples/tracing), [PR](https://github.com/h3js/srvx/pull/141)
+- [mysql2 Tracing Channels](https://github.com/sidorares/node-mysql2/pull/4178) (colon delimiter: `mysql2:query`)
