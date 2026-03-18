@@ -54,7 +54,7 @@ Libraries should pick one delimiter and use it consistently. The dot style reads
 
 **Pattern Breakdown**
 
-- **Namespace:** The package or module name (e.g., `unstorage`, `h3`, `undici`, `mysql2`).
+- **Namespace:** The package or module name (e.g., `unstorage`, `h3`, `undici`).
 - **Operation:** The entity being acted upon (e.g., `request`, `file`, `query`). Use full nouns, not abbreviations.
 - **Event Type:** The lifecycle hook (e.g., `start`, `end`).
 
@@ -63,10 +63,13 @@ Examples:
 ```ts
 import diagnostics_channel from 'node:diagnostics_channel';
 
-// Dot delimiter
+// Diagnostic Channel
+const standaloneChannel = diagnostics_channel.channel('tracing:{namespace}.{operation}:{eventType}');
+
+// Tracing Channel (Dot delimiter)
 const tracingChannel = diagnostics_channel.tracingChannel('{namespace}.{operation}');
 
-// Colon delimiter
+// Tracing Channel (Colon delimiter)
 const tracingChannel = diagnostics_channel.tracingChannel('{namespace}:{operation}');
 ```
 
